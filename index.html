@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Información de Créditos</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #56628d;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* ===== CONTENEDOR ===== */
+        .container {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem 3.5rem 2.5rem;
+            max-width: 1400px;
+            width: 100%;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ===== TÍTULO CENTRADO ===== */
+        .title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e2a3a;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .title i {
+            margin-right: 0.6rem;
+            color: #56628d;
+            font-size: 1.8rem;
+        }
+
+        /* ===== TABLA ===== */
+        .credit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.25rem;
+        }
+
+        /* ===== ENCABEZADO ===== */
+        .credit-table thead {
+            background: #eef0f5;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .credit-table thead th {
+            padding: 1.6rem 1.2rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #3d4768;
+            border-bottom: 3px solid #d6dae5;
+            white-space: nowrap;
+            min-width: 120px;
+        }
+
+        /* Primera columna alineada a la izquierda */
+        .credit-table thead th:first-child {
+            text-align: left;
+            padding-left: 0;
+            min-width: 160px;
+        }
+
+        .credit-table thead th:last-child {
+            padding-right: 0;
+        }
+
+        /* ===== CUERPO ===== */
+        .credit-table tbody tr {
+            border-bottom: 2px solid #eef0f5;
+            transition: background 0.3s ease;
+            animation: fadeInRow 0.5s ease forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        /* Animación escalonada */
+        .credit-table tbody tr:nth-child(1) { animation-delay: 0.05s; }
+        .credit-table tbody tr:nth-child(2) { animation-delay: 0.1s; }
+        .credit-table tbody tr:nth-child(3) { animation-delay: 0.15s; }
+        .credit-table tbody tr:nth-child(4) { animation-delay: 0.2s; }
+        .credit-table tbody tr:nth-child(5) { animation-delay: 0.25s; }
+        .credit-table tbody tr:nth-child(6) { animation-delay: 0.3s; }
+        .credit-table tbody tr:nth-child(7) { animation-delay: 0.35s; }
+
+        @keyframes fadeInRow {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .credit-table tbody tr:hover {
+            background: #f8f9fc;
+            transition: all 0.2s ease;
+        }
+
+        .credit-table tbody td {
+            padding: 1.4rem 1.2rem;
+            color: #1e2a3a;
+            font-weight: 500;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .credit-table tbody td:first-child {
+            text-align: left;
+            padding-left: 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .credit-table tbody td:last-child {
+            padding-right: 0;
+        }
+
+        /* ===== ESTILOS ESPECÍFICOS ===== */
+        .cliente-nombre {
+            font-weight: 600;
+            color: #1e2a3a;
+            font-size: 1.2rem;
+        }
+
+        .prestamo {
+            font-weight: 600;
+            color: #1e2a3a;
+            font-size: 1.2rem;
+        }
+
+        .capacidad {
+            font-weight: 600;
+            color: #1e2a3a;
+            font-size: 1.2rem;
+        }
+
+        .tarjeta-si {
+            color: #27ae60;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .tarjeta-no {
+            color: #e74c3c;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .periodicidad {
+            font-weight: 500;
+            color: #1e2a3a;
+            font-size: 1.15rem;
+        }
+
+        .cuotas {
+            font-weight: 600;
+            color: #1e2a3a;
+            font-size: 1.2rem;
+        }
+
+        /* ===== PIE DE TABLA (FUENTE CENTRADA) ===== */
+        .table-footer {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eef0f5;
+        }
+
+        .table-footer .source {
+            font-size: 1rem;
+            color: #56628d;
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            opacity: 0.7;
+        }
+
+        .table-footer .source i {
+            margin-right: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 2rem 2.5rem 2rem;
+            }
+
+            .credit-table {
+                font-size: 1.1rem;
+            }
+
+            .credit-table thead th {
+                padding: 1.3rem 0.8rem;
+                font-size: 0.85rem;
+                min-width: 100px;
+            }
+
+            .credit-table tbody td {
+                padding: 1.1rem 0.8rem;
+                font-size: 1.05rem;
+            }
+
+            .title {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                padding: 1.8rem 1.8rem 1.8rem;
+            }
+
+            .credit-table {
+                font-size: 1rem;
+            }
+
+            .credit-table thead th {
+                padding: 1.1rem 0.6rem;
+                font-size: 0.78rem;
+                letter-spacing: 0.4px;
+                min-width: 80px;
+            }
+
+            .credit-table tbody td {
+                padding: 0.9rem 0.6rem;
+                font-size: 0.95rem;
+            }
+
+            .credit-table thead th:first-child {
+                min-width: 130px;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem 1rem;
+                border-radius: 14px;
+            }
+
+            .title {
+                font-size: 1.3rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .title i {
+                font-size: 1.2rem;
+            }
+
+            .credit-table {
+                font-size: 0.85rem;
+            }
+
+            .credit-table thead th {
+                padding: 0.9rem 0.5rem;
+                font-size: 0.65rem;
+                letter-spacing: 0.3px;
+                min-width: 70px;
+            }
+
+            .credit-table tbody td {
+                padding: 0.8rem 0.5rem;
+                font-size: 0.8rem;
+            }
+
+            .credit-table tbody td:first-child {
+                font-size: 0.85rem;
+            }
+
+            .credit-table thead th:first-child {
+                min-width: 110px;
+            }
+
+            .table-footer .source {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem 0.6rem;
+                border-radius: 12px;
+            }
+
+            .title {
+                font-size: 1.1rem;
+            }
+
+            .credit-table {
+                font-size: 0.7rem;
+            }
+
+            .credit-table thead th {
+                padding: 0.6rem 0.3rem;
+                font-size: 0.5rem;
+                letter-spacing: 0px;
+                min-width: 55px;
+            }
+
+            .credit-table tbody td {
+                padding: 0.6rem 0.3rem;
+                font-size: 0.65rem;
+            }
+
+            .credit-table tbody td:first-child {
+                font-size: 0.7rem;
+            }
+
+            .credit-table thead th:first-child {
+                min-width: 85px;
+            }
+
+            .tarjeta-si,
+            .tarjeta-no,
+            .prestamo,
+            .capacidad,
+            .cuotas {
+                font-size: 0.65rem !important;
+            }
+
+            .periodicidad {
+                font-size: 0.6rem !important;
+            }
+
+            .table-footer .source {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eef0f5;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #56628d;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3d4768;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ===== TÍTULO CENTRADO ===== -->
+        <h2 class="title">
+            <i class="fas fa-info-circle"></i> Información de Créditos
+        </h2>
+
+        <!-- ===== TABLA ===== -->
+        <div style="overflow-x: auto;">
+            <table class="credit-table">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Préstamo (Millones)</th>
+                        <th>Capacidad de Pago (Miles)</th>
+                        <th>Tarjeta Crédito</th>
+                        <th>Periodicidad</th>
+                        <th>Nº Cuotas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="cliente-nombre">Mario Vargas</td>
+                        <td class="prestamo">17</td>
+                        <td class="capacidad">170</td>
+                        <td class="tarjeta-no">NO</td>
+                        <td class="periodicidad">Mensual</td>
+                        <td class="cuotas">6</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente-nombre">Luis García</td>
+                        <td class="prestamo">85</td>
+                        <td class="capacidad">250</td>
+                        <td class="tarjeta-si">Sí</td>
+                        <td class="periodicidad">Trimestral</td>
+                        <td class="cuotas">12</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente-nombre">Jaime Díaz</td>
+                        <td class="prestamo">35</td>
+                        <td class="capacidad">180</td>
+                        <td class="tarjeta-no">NO</td>
+                        <td class="periodicidad">Semestral</td>
+                        <td class="cuotas">24</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente-nombre">Sandra Reyes</td>
+                        <td class="prestamo">27.9</td>
+                        <td class="capacidad">210</td>
+                        <td class="tarjeta-si">Sí</td>
+                        <td class="periodicidad">Mensual</td>
+                        <td class="cuotas">12</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente-nombre">Sonia Pérez</td>
+                        <td class="prestamo">69.9</td>
+                        <td class="capacidad">350</td>
+                        <td class="tarjeta-si">Sí</td>
+                        <td class="periodicidad">Mensual</td>
+                        <td class="cuotas">36</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente-nombre">Ralph Williams</td>
+                        <td class="prestamo">36.9</td>
+                        <td class="capacidad">550</td>
+                        <td class="tarjeta-no">NO</td>
+                        <td class="periodicidad">Mensual</td>
+                        <td class="cuotas">24</td>
+                    </tr>
+                    <tr>
+                        <td class="cliente-nombre">Juan Rodríguez</td>
+                        <td class="prestamo">44.3</td>
+                        <td class="capacidad">680</td>
+                        <td class="tarjeta-si">Sí</td>
+                        <td class="periodicidad">Mensual</td>
+                        <td class="cuotas">12</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ===== PIE DE TABLA (FUENTE CENTRADA) ===== -->
+        <div class="table-footer">
+            <span class="source">
+                <i class="fas fa-database"></i> Fuente: elaboración propia.
+            </span>
+        </div>
+    </div>
+
+    <script>
+        console.log('✅ Tabla de créditos cargada correctamente.');
+    </script>
+
+</body>
+</html>
